@@ -2,7 +2,7 @@
 
 <div class="panel panel-default" ng-controller="zipcode">
     <div class="panel-heading">BUSCA DE CEP</div>
-    <div class="panel-body" style="min-height:405px">
+    <div class="panel-body" style="min-height:450px">
         <div class="row">
             <div class="col-lg-6">
                 <h5>Informe os dados do CEP</h5>
@@ -14,10 +14,12 @@
                     <button type="submit" class="btn btn-primary">
                         <span class="glyphicon glyphicon-search"></span> Buscar 
                     </button>
-                    <button type="button" class="btn btn-primary" ng-click="clear();">
+                    <button type="button" class="btn btn-danger" ng-click="clear();">
                         <span class="glyphicon glyphicon-remove"></span> Limpar
                     </button>
                 </form>
+                <br />
+                <div ng-if="message" class="alert alert-danger" role="alert">{{message}}</div>
             </div>
             <div class="col-lg-6">
                 <h5>Resultado da Busca</h5>
@@ -73,5 +75,5 @@
             </div>
         </div>
     </div>
-    <div class="panel-footer"><a href="/#/" class="btn btn-success"><span class="glyphicon"></span> Voltar</a></div>
+    <div class="panel-footer"><a href="/#/" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a></div>
 </div>

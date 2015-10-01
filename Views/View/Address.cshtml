@@ -1,0 +1,75 @@
+﻿@{ Layout = null; }
+<div class="panel panel-default" ng-controller="cotacao">
+    <div class="panel-heading">BUSCA DE CEP POR Endereço</div>
+    <div class="panel-body" style="min-height:450px">
+        <div class="row">
+            <div class="col-lg-12">
+                <h5>Informe os dados da Busca</h5>
+                <hr />
+                <form ng-submit="submit();" class="" role="form" id="form1" style="width:100%">
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <input type="text" class="form-control" id="uf" ng-model="uf" placeholder="Digite a Unidade Federativa" required="required" maxlength="2" autofocus pattern="[A-Za-z]{2}">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <input type="text" class="form-control" id="city" ng-model="city" placeholder="Digite a Cidade" required="required" maxlength="20" autofocus pattern="[A-Za-z]{3,}">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <input type="text" class="form-control" id="address" ng-model="address" placeholder="Digite o Endereço" required="required" maxlength="20" autofocus pattern="[A-Za-z]{3,}">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span> Buscar
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="clear();">
+                                <span class="glyphicon glyphicon-remove"></span> Limpar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div ng-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+            </div>
+            <div class="col-lg-12">
+                <h5>Resultado da Busca</h5>
+                <hr />
+
+                <table>
+                    <tbody>
+                        <tr ng-repeat="item in data">
+                            <td>
+                                <em>Número:</em>
+                                <p class="text-primary">{{data.Zip}}</p>
+                            </td>
+                            <td>
+                                <em>Gia:</em>
+                                <p class="text-primary">{{item.Gia}}</p>
+                            </td>
+                            <td>
+                                <em>Ibge:</em>
+                                <p class="text-primary">{{item.Ibge}}</p>
+                            </td>
+                            <td>
+                                <em>Endereço:</em>
+                                <p class="text-primary">{{item.Address}}</p>
+                            </td>
+                            <td>
+                                <em>Bairro:</em>
+                                <p class="text-primary">{{item.District}}</p>
+                            </td>
+                            <td>
+                                <em>Cidade / UF:</em>
+                                <p class="text-primary">{{item.City}} / {{item.UF}}</p>
+                            </td>
+                            <td>
+                                <em>Complemento:</em>
+                                <p class="text-primary">{{item.Complement}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer"><a href="/#/" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a></div>
+</div>
