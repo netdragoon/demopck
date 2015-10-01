@@ -2,7 +2,7 @@
 
 <div class="panel panel-default" ng-controller="zipcode">
     <div class="panel-heading">BUSCA DE CEP</div>
-    <div class="panel-body" style="min-height:385px">
+    <div class="panel-body" style="min-height:405px">
         <div class="row">
             <div class="col-lg-6">
                 <h5>Informe os dados do CEP</h5>
@@ -29,6 +29,18 @@
                                 <td>
                                     <em>Número:</em>
                                     <p class="text-primary">{{data.Zip}}</p>
+                                </td>
+                            </tr>
+                            <tr ng-if="data.Gia">
+                                <td>
+                                    <em>Gia:</em>
+                                    <p class="text-primary">{{data.Gia}}</p>
+                                </td>
+                            </tr>
+                            <tr ng-if="data.Ibge">
+                                <td>
+                                    <em>Ibge:</em>
+                                    <p class="text-primary">{{data.Ibge}}</p>
                                 </td>
                             </tr>
                             <tr ng-if="data.Address">
