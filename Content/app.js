@@ -47,13 +47,14 @@ app.controller('menu', function ($scope, $routeParams, $http) {
 });
 app.controller('cotacao', function ($scope, $routeParams, $http) {
 
-    $scope.data = {};
+    $scope.data = { 'Name': '' };
     $scope.clear = function()
     {
-        $scope.data = {};
+        $scope.data = { 'Name': '' };
     }
     $scope.submit = function()
     {
+        $scope.clear();
         $http.post('/operation/cotacao', { })
                 .success(function (data) {
                     data.dateBR = moment(data.Date).format('DD/MM/YYYY');
@@ -69,34 +70,43 @@ app.controller('cotacao', function ($scope, $routeParams, $http) {
 
 });
 app.controller('address', function ($scope, $routeParams, $http) {
-    $scope.uf = '';
+    $scope.uf = 'SP';
     $scope.city = '';
     $scope.address = '';
     $scope.data = [];
     $scope.message = '';
+    $scope.loading = false;
 
     $scope.clear = function () {
-        $scope.uf = '';
+        $scope.uf = 'SP';
         $scope.city = '';
         $scope.address = '';
         $scope.data = [];
         $scope.message = '';
+        $scope.loading = false;
         $("#uf").focus();
     }
 
     $scope.submit = function ()
     {
-        $http.post('/operation/address', { 'uf':$scope.uf, 'city':$scope.city, 'address': $scope.address })
-                .success(function (data) {
-                    if (parseInt(data.length) === 0)
-                    {
-                        $scope.message = 'Nenhum item encontrado';
-                    }
-                    $scope.data = data;
-                })
-                .error(function (data) {
-                    $scope.clear();
-                });
+        if ($scope.city.length > 2 && $scope.address.length > 2) {
+            $scope.message = '';
+            $scope.loading = true;
+            $scope.data = [];
+            $http.post('/operation/address', { 'uf': $scope.uf, 'city': $scope.city, 'address': $scope.address })
+                    .success(function (data) {
+                        if (parseInt(data.length) === 0) {
+                            $scope.message = 'Nenhum item encontrado';
+                        }
+                        $scope.data = data;
+                        $scope.loading = false;
+                    })
+                    .error(function (data) {
+                        $scope.clear();
+                    });
+        } else {
+            $scope.message = 'Cidade e endereço é obrigatório mais de 2 letras';
+        }
     }
 
 });
@@ -105,18 +115,21 @@ app.controller('zipcode', function ($scope, $routeParams, $http) {
     $scope.cep = '';
     $scope.data = {};
     $scope.message = '';
+    $scope.loading = false;
 
     $scope.clear = function ()
     {
         $scope.cep = '';
         $scope.data = { 'Zip': "", 'Address': "", 'District': "", 'City': "", 'Uf': "", 'Ibge': "", 'Erro': true, 'Complement': "", 'Gia': "" };
         $scope.message = '';
+        $scope.loading = false;
         $("#cep").focus();
     }
 
     $scope.submit = function ()
     {
         if ($scope.verify()) {
+            $scope.loading = true;
             $http.post('/operation/zipcode', { 'cep': $scope.cep })
                 .success(function (data) {                    
                     if (data.Erro) {
@@ -125,7 +138,8 @@ app.controller('zipcode', function ($scope, $routeParams, $http) {
                     } else {
                         $scope.data = data;
                         $scope.message = '';
-                    }                    
+                    }
+                    $scope.loading = false;
                 })
                 .error(function (data) {
                     $scope.clear();                    
